@@ -1,4 +1,8 @@
-class BloomFilter {
+import java.util.AbstractCollection;
+import java.util.Iterator;
+import java.util.Set;
+
+class BloomFilter<T extends Comparable<T>> extends AbstractCollection<T> implements Set<T> {
 
     private int numberOfHash;
     //numOfHashFun
@@ -8,27 +12,39 @@ class BloomFilter {
     //Count of add
     private BitSet bit;
 
+    @Override
+    public Iterator<T> iterator() {
+        return null;
+    }
+
+    @Override
+    public int size() {
+        return counter;
+    }
+
+    @Override
+    public void clear() {
+        bit=new BitSet(getSize());
+        counter=0;
+    }
+
     BloomFilter(int size, int numberOfHash) {
         if (size <= 0)
             throw new IllegalArgumentException("Incorrect size");
+        if (numberOfHash==0)
+            throw new IllegalArgumentException("Incorrect hash");
         bit = new BitSet(size);
         this.numberOfHash = numberOfHash;
         this.size = size;
     }
 
-    void clear() {
-        counter = 0;
-        try {
-            bit.clear();
-        } catch (Exception ignored){}
+
+    private int getSize() {
+        return size;
     }
 
 
-    int size() {
-        return counter;
-    }
-
-    private int hash(Object o) {
+    private int hash(T o) {
         int result = 0;
         for (int i = 0; i < o.toString().length(); i++)
             result += (o.toString().length() & (i * 16)) * forHashGenerate;
@@ -36,15 +52,16 @@ class BloomFilter {
     }
 
 
-    boolean add(Object o) {
+    public boolean add(T o) {
         counter++;
         for (int i = 0; i < numberOfHash; i++) {
             bit.add(hash(o));
         }
-        return false;
+        return true;
     }
 
-    boolean contains(Object o) {
+
+    boolean contains(T o) {
         for (int i = 0; i < numberOfHash; i++) {
             if (!bit.contains(hash(o)))
                 return false;
