@@ -29,8 +29,6 @@ class BloomFilter<T extends Comparable<T>> extends AbstractCollection<T> impleme
     }
 
     BloomFilter(int size, int numberOfHash) {
-        if (size <= 0)
-            throw new IllegalArgumentException("Incorrect size");
         if (numberOfHash==0)
             throw new IllegalArgumentException("Incorrect hash");
         bit = new BitSet(size);

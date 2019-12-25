@@ -6,6 +6,7 @@ import static org.junit.Assert.*;
 
 public class BitSetTest {
     BitSet bs = new BitSet(20);
+
     @Test
     public void add() {
         bs.add(11);
@@ -16,12 +17,12 @@ public class BitSetTest {
         bs.add(8);
         int[] test1 = new int[1];
         test[0] = 35072;
-        assertEquals(Arrays.toString(test),bs.toString());
+        assertEquals(Arrays.toString(test), bs.toString());
     }
 
     @Test
     public void contains() {
-        for (int i = 0; i <5 ; i++) {
+        for (int i = 0; i < 5; i++) {
             bs.add(i);
         }
         assertTrue(bs.contains(0));
@@ -39,4 +40,4 @@ public class BitSetTest {
             System.out.println("Превшают заданное значение");
         }
     }
-    }
+}
